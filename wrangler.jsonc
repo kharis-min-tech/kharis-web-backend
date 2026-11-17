@@ -11,7 +11,9 @@
   // Public settings. SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY and SUPABASE_ANON_KEY
   // are Worker secrets (`npx wrangler secret put <NAME>`), never set here.
   "vars": {
-    "CORS_ORIGINS": "https://content.kharis.org,https://kharis-content.itadmin-a94.workers.dev",
+    // Browser origins that may call /v1/site or forms. Server-side Worker fetches do not need CORS,
+    // but the public sites and local apps do when the browser talks to the API directly.
+    "CORS_ORIGINS": "https://content.kharis.org,https://kharis-content.itadmin-a94.workers.dev,http://localhost:3002,https://kharis.org,https://www.kharis.org,https://kharis-main.itadmin-a94.workers.dev,https://kharis-kp2.itadmin-a94.workers.dev,http://localhost:3000,http://localhost:3001",
     "STUDIO_URL": "https://content.kharis.org",
   },
   // Cutover switch: uncomment to serve the API on its own subdomain. Until then

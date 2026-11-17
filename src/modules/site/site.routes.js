@@ -104,4 +104,18 @@ router.get('/testimonies', handle(async (req, res) =>
 router.get('/events', handle(async (req, res) =>
   send(res, 'Events retrieved', await siteRepository.events())));
 
+/**
+ * @swagger
+ * /v1/site/documents:
+ *   get:
+ *     summary: Governance and fasting PDF slots from app_config
+ *     tags:
+ *       - Site
+ *     responses:
+ *       200:
+ *         description: Site documents config
+ */
+router.get('/documents', handle(async (req, res) =>
+  send(res, 'Documents retrieved', await siteRepository.documents())));
+
 export default router;

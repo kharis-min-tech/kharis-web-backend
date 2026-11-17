@@ -85,4 +85,15 @@ export const siteRepository = {
       await supabase.from('events').select(EVENT_FIELDS).order('start_time', { ascending: true }),
     ) ?? [];
   },
+
+  async documents() {
+    const row = unwrap(
+      await supabase
+        .from('app_config')
+        .select('value')
+        .eq('key', 'site_documents')
+        .maybeSingle(),
+    );
+    return row?.value ?? {};
+  },
 };
