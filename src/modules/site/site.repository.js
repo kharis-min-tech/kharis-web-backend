@@ -96,4 +96,16 @@ export const siteRepository = {
     );
     return row?.value ?? {};
   },
+
+  async contents(workspace) {
+    const key = workspace === 'kp2' ? 'site_contents_kp2' : 'site_contents_kharis';
+    const row = unwrap(
+      await supabase
+        .from('app_config')
+        .select('value')
+        .eq('key', key)
+        .maybeSingle(),
+    );
+    return row?.value ?? {};
+  },
 };

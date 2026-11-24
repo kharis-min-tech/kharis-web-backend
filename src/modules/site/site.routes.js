@@ -3,7 +3,7 @@ import { handle } from '../../config/http.js';
 import { notfound } from '../../shared/errors/errors.js';
 import { successResponse } from '../../shared/middleware/response.js';
 import { siteRepository } from './site.repository.js';
-import { mediaTypes } from './site.rules.js';
+import { contentsWorkspace, mediaTypes } from './site.rules.js';
 
 // The websites cache pages for 60 seconds, so the API matches that.
 const SITE_CACHE_CONTROL = 'public, max-age=60';
@@ -117,5 +117,29 @@ router.get('/events', handle(async (req, res) =>
  */
 router.get('/documents', handle(async (req, res) =>
   send(res, 'Documents retrieved', await siteRepository.documents())));
+
+/**
+ * @swagger
+ * /v1/site/contents:
+ *   get:
+ *     summary: Site section media overrides from app_config (per workspace)
+ *     tags:
+ *       - Site
+ *     parameters:
+ *       - in: query
+ *         name: workspace
+ *         description: kharis or kp2 (default kharis)
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Site contents config
+ */
+router.get('/contents', handle(async (req, res) =>
+  send(
+    res,
+    'Site contents retrieved',
+    await siteRepository.contents(contentsWorkspace(req.query.workspace)),
+  )));
 
 export default router;
